@@ -1,0 +1,189 @@
+/_ SELECT _
+FROM Invoice in
+JOIN InvoiceLine il ON in.InvoiceId = in.InvoiceId
+WHERE UnitPrice > 0.99 \*/
+
+/_ SELECT i.InvoiceDate,i.Total,cus.FirstName,cus.LastName
+FROM Invoice i
+JOIN Customer cus ON i.CustomerId = cus.CustomerId _/
+
+/_ SELECT cus.FirstName,cus.LastName,rep.FirstName,rep.LastName
+FROM Customer cus
+JOIN Employee rep ON cus.SupportRepId = rep.EmployeeId _/
+
+/_ SELECT al.Title, art.Name
+FROM Album al
+JOIN Artist art ON al.ArtistId = art.ArtistId _/
+
+/_ SELECT ptr.TrackId
+FROM PlaylistTrack ptr
+JOIN Playlist pl ON pl.PlaylistId = ptr.PlaylistId
+WHERE pl.Name = 'Music' _/
+
+/_ SELECT t.Name
+FROM Track t
+JOIN PlaylistTrack pt ON t.TrackId = pt.TrackId
+WHERE pt.PlaylistId = 5 _/
+
+/_ SELECT pl.Name,tr.Name
+FROM Track tr
+JOIN PlaylistTrack pt ON pt.TrackId = tr.TrackId
+JOIN Playlist pl ON pl.PlaylistId = pt.PlaylistId _/
+
+/_ SELECT tr.Name,alb.Title
+FROM Track tr
+JOIN Album alb ON alb.AlbumId = tr.AlbumId
+JOIN Genre g ON g.GenreId = tr.GenreId
+WHERE g.Name = 'Alternative' _/
+
+/\* ********\*\*\********* \*/
+
+/_ SELECT _
+FROM invoice
+WHERE InvoiceId IN (SELECT InvoiceId from InvoiceLine WHERE UnitPrice > 0.99) \*/
+
+/_ SELECT _
+FROM PlaylistTrack
+WHERE PlaylistId IN (SELECT PlaylistId from Playlist WHERE Name = 'Music') \*/
+
+/_ SELECT Name
+FROM Track
+WHERE TrackId IN (SELECT TrackId from PlaylistTrack WHERE PlaylistId = 5) _/
+
+/_ SELECT _
+FROM Track
+WHERE GenreId IN (SELECT GenreId from Genre WHERE Name ='Comedy') \*/
+
+/_ SELECT _
+FROM Track
+WHERE AlbumId IN (SELECT AlbumId from Album WHERE Title = 'Fireball') \*/
+
+/_ SELECT _
+FROM Track
+WHERE AlbumId IN (SELECT AlbumId from Album WHERE ArtistId IN
+(SELECT ArtistId from Artist WHERE Name = 'Queen')) _/
+
+/_ **********\*\*********** \*/
+
+/_ UPDATE Customer
+SET Fax = null
+WHERE Fax IS NOT NULL _/
+
+/_ UPDATE Customer
+SET company = 'Self'
+WHERE Company IS NULL _/
+
+/_ UPDATE Customer
+SET LastName = 'Thompson'
+WHERE FirstName = 'Julia' AND LastName = 'Barnett' _/
+
+/_ UPDATE Customer
+SET SupportRepId = 4
+WHERE email = 'luisrojas@yahoo.cl' _/
+
+/_ UPDATE Track
+SET Composer = 'The darkness around us'
+WHERE GenreId = (SELECT GenreId FROM Genre WHERE Name ='Metal') AND
+Composer IS NULL _/
+
+/* *********************** */
+/* SELECT count(*), g.Name
+FROM Track t
+JOIN Genre g ON t.genreid = g.genreId
+Group By g.Name */
+
+/* SELECT count(*), g.Name
+FROM Track t
+JOIN Genre g ON t.genreid = g.genreId
+WHERE g.Name = 'Pop' OR g.Name = 'Rock'
+Group By g.Name */
+
+/* SELECT art.Name, count(*)
+FROM Album alb
+JOIN Artist art ON alb.ArtistId = art.ArtistId
+GROUP BY alb.ArtistId */
+
+/* ***************** */
+
+/* SELECT DISTINCT Composer
+FROM Track */
+
+/* SELECT DISTINCT BillingPostalCode
+FROM Invoice */
+
+/* SELECT DISTINCT Company
+FROM Customer */
+
+/* ************************* */
+
+/* CREATE TABLE practice_delete ( Name string, Type string, Value integer );
+INSERT INTO practice_delete ( Name, Type, Value ) VALUES ("delete", "bronze", 50);
+INSERT INTO practice_delete ( Name, Type, Value ) VALUES ("delete", "bronze", 50);
+INSERT INTO practice_delete ( Name, Type, Value ) VALUES ("delete", "bronze", 50);
+INSERT INTO practice_delete ( Name, Type, Value ) VALUES ("delete", "silver", 100);
+INSERT INTO practice_delete ( Name, Type, Value ) VALUES ("delete", "silver", 100);
+INSERT INTO practice_delete ( Name, Type, Value ) VALUES ("delete", "gold", 150);
+INSERT INTO practice_delete ( Name, Type, Value ) VALUES ("delete", "gold", 150);
+INSERT INTO practice_delete ( Name, Type, Value ) VALUES ("delete", "gold", 150);
+INSERT INTO practice_delete ( Name, Type, Value ) VALUES ("delete", "gold", 150); */
+
+/* SELECT * FROM practice_delete; */
+
+/* DELETE FROM practice_delete
+WHERE type = 'bronze' */
+
+/* DELETE FROM practice_delete
+WHERE type = 'silver'  */
+/* 
+DELETE FROM practice_delete
+WHERE value = 150 */
+
+/* ********************** */
+
+/* CREATE TABLE users(
+id INTEGER PRIMARY KEY,
+name varchar(25),
+email varchar(50)
+) */
+
+/*  CREATE TABLE products(
+  id INTEGER PRIMARY KEY,
+ name varchar(25),
+  price INTEGER
+)
+ */
+/* CREATE TABLE orders(
+id INTEGER PRIMARY KEY,
+  productid INTEGER,
+ FOREIGN KEY (productid) REFERENCES products(id)
+) */
+
+/* INSERT INTO users(name,email)
+values('Ray','lions@zmail.com'),('Jane','anemail@zmail.com'),('Lucy','zebras@zmail.com') */
+
+/* INSERT INTO products(name,price)
+values('Shoe',45),('Pant',70),('Shirt',5)  */
+
+/* SELECT SUM(price) FROM products */
+
+/* ALTER TABLE orders
+ADD COLUMN userid REFERENCES users(id); */
+
+/* UPDATE orders
+SET userid = 2
+WHERE id =1 */
+
+/* UPDATE orders
+SET userid = 1
+WHERE id =2 */
+
+/* UPDATE orders
+SET userid = 3
+WHERE id =3 */
+
+
+
+
+
+
+
